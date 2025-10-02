@@ -1,3 +1,35 @@
-<div class="container">
-  <h1>{{ title }}</h1>
+<div class="app-shell">
+  <div class="card">
+    <header class="header">
+      <h1 class="title">{{ title }}</h1>
+      <p class="subtitle">Ocean Professional</p>
+    </header>
+
+    <section class="status" role="status" aria-live="polite">
+      {{ statusMessage() }}
+    </section>
+
+    <section class="board" role="grid" aria-label="Tic Tac Toe board">
+      <button
+        class="cell"
+        *ngFor="let _ of [].constructor(9); let i = index"
+        role="gridcell"
+        [attr.aria-label]="'Cell ' + (i + 1)"
+        [disabled]="getCell(i) !== null || winner() !== null"
+        [class.filled]="getCell(i) !== null"
+        [class.win]="isWinningIndex(i)"
+        (click)="onCellClick(i)"
+      >
+        <span class="piece" [class.x]="getCell(i) === 'X'" [class.o]="getCell(i) === 'O'">
+          {{ getCell(i) || '' }}
+        </span>
+      </button>
+    </section>
+
+    <footer class="controls">
+      <button class="restart-btn" (click)="restart()" aria-label="Restart game">
+        Restart
+      </button>
+    </footer>
+  </div>
 </div>
